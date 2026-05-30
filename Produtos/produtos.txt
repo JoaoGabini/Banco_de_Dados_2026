@@ -1,0 +1,328 @@
+Microsoft Windows [versão 6.3.9600]
+(c) 2013 Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\ETEC>C:\xampp\mysql\bin
+'C:\xampp\mysql\bin' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+
+C:\Users\ETEC>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 40
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use produtos
+Database changed
+MariaDB [produtos]> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| produtos           |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [produtos]> use produtos
+Database changed
+MariaDB [produtos]> show tables
+    -> ;
++--------------------+
+| Tables_in_produtos |
++--------------------+
+| categoria          |
+| produto            |
++--------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [produtos]> describe produto
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.052 sec)
+
+MariaDB [produtos]> alter table produto change qtde quantidade int(11) not
+    -> null;
+Query OK, 0 rows affected (0.047 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe produto
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| quantidade   | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.028 sec)
+
+MariaDB [produtos]> alter table categoria drop column descricao
+    -> ;
+Query OK, 0 rows affected (0.051 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.030 sec)
+
+MariaDB [produtos]> alter table categoria add descricao varchar(255);
+Query OK, 0 rows affected (0.128 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.047 sec)
+
+MariaDB [produtos]> show tables;
++--------------------+
+| Tables_in_produtos |
++--------------------+
+| categoria          |
+| produto            |
++--------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [produtos]> rename table produto to itens;
+Query OK, 0 rows affected (0.151 sec)
+
+MariaDB [produtos]> show tables;
++--------------------+
+| Tables_in_produtos |
++--------------------+
+| categoria          |
+| itens              |
++--------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [produtos]> describe categoria
+    -> ;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.029 sec)
+
+MariaDB [produtos]> insert into categoria(categoria, descricao)
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '' a
+t line 1
+MariaDB [produtos]> insert into categoria (categoria, descricao) values
+    -> ('Eletrônico', 'Aparelhos eletrônicos, câmeras, tablets, notebooks, compu
+tadores e etc...')
+    -> ,
+    -> ('Limpeza', 'Produtos e itens para limpeza'),
+    -> ('Decoração', 'Itens para decoração');
+Query OK, 3 rows affected (0.030 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> select * from produto
+    -> ;
+ERROR 1146 (42S02): Table 'produtos.produto' doesn't exist
+MariaDB [produtos]> select * from itens
+    -> ;
+Empty set (0.002 sec)
+
+MariaDB [produtos]> select * from produtos
+    -> ;
+ERROR 1146 (42S02): Table 'produtos.produtos' doesn't exist
+MariaDB [produtos]> SELECT * FROM ITENS
+    -> ;
+Empty set (0.000 sec)
+
+MariaDB [produtos]> select * from categoria;
++-------------+------------+----------------------------------------------------
+-----------------------+
+| idcategoria | categoria  | descricao
+                       |
++-------------+------------+----------------------------------------------------
+-----------------------+
+|           1 | Eletrônico | Aparelhos eletrônicos, câmeras, tablets, notebooks,
+ computadores e etc... |
+|           2 | Limpeza    | Produtos e itens para limpeza
+                       |
+|           3 | Decoração  | Itens para decoração
+                       |
++-------------+------------+----------------------------------------------------
+-----------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [produtos]> describe itens
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| quantidade   | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.053 sec)
+
+MariaDB [produtos]> insert into itens (idcategoria, nomeproduto, preco, quantida
+e, datacadastro, ativo) values
+    -> (1, 'Celular', '989,99', '20', '2026-05-27', '1'),
+    -> (2, 'Cif', '14,99', 2, '2026-05-27', '1'),
+    -> (3, 'Planta Decorativa', '19,99', 1, '2026-05-27', '1');
+ERROR 1054 (42S22): Unknown column 'quantidae' in 'field list'
+MariaDB [produtos]> insert into itens (idcategoria, nomeproduto, preco, quantida
+de, datacadastro, ativo) values
+    -> (1, 'Celular', '989,99', '20', '2026-05-27', '1'),
+    -> (2, 'Cif', '14,99', 2, '2026-05-27', '1'),
+    -> (3, 'Planta Decorativa', '19,99', 1, '2026-05-27', '1');
+Query OK, 3 rows affected, 6 warnings (0.053 sec)
+Records: 3  Duplicates: 0  Warnings: 6
+
+MariaDB [produtos]> select * from itens
+    -> ;
++-----------+-------------+-------------------+--------+------------+-----------
+---+-------+
+| idproduto | idcategoria | nomeproduto       | preco  | quantidade | datacadast
+ro | ativo |
++-----------+-------------+-------------------+--------+------------+-----------
+---+-------+
+|         1 |           1 | Celular           | 989.00 |         20 | 2026-05-27
+   | ?     |
+|         2 |           2 | Cif               |  14.00 |          2 | 2026-05-27
+   | ?     |
+|         3 |           3 | Planta Decorativa |  19.00 |          1 | 2026-05-27
+   | ?     |
++-----------+-------------+-------------------+--------+------------+-----------
+---+-------+
+3 rows in set (0.000 sec)
+
+MariaDB [produtos]> insert into categoria (categoria,descricao) values
+    -> ('Alimentos', 'Itens alimentícios para consumo'),
+    -> ('Congelados', 'Itens congelados para consumo');
+Query OK, 2 rows affected (1.612 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> select * from categoria
+    -> ;
++-------------+------------+---------------------------------------------------------------------------+
+| idcategoria | categoria  | descricao                                                                 |
++-------------+------------+---------------------------------------------------------------------------+
+|           1 | Eletrônico | Aparelhos eletrônicos, câmeras, tablets, notebooks, computadores e etc... |
+|           2 | Limpeza    | Produtos e itens para limpeza                                             |
+|           3 | Decoração  | Itens para decoração                                                      |
+|           4 | Alimentos  | Itens alimentícios para consumo                                           |
+|           5 | Congelados | Itens congelados para consumo                                             |
++-------------+------------+---------------------------------------------------------------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [produtos]> describe itens
+    -> ;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| quantidade   | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.323 sec)
+
+MariaDB [produtos]> insert into itens (idcategoria,nomeproduto,preco,quantidade,datacadastro,ativo) values
+    -> (4,'Macarrão','3,90',3,'2026-05-30','1'),
+    -> (5,'Pão de Queijo','16,90',1,'2026-05-30','1')
+    -> ;
+Query OK, 2 rows affected, 4 warnings (0.131 sec)
+Records: 2  Duplicates: 0  Warnings: 4
+
+MariaDB [produtos]> select * from itens
+    -> ;
++-----------+-------------+-------------------+--------+------------+--------------+-------+
+| idproduto | idcategoria | nomeproduto       | preco  | quantidade | datacadastro | ativo |
++-----------+-------------+-------------------+--------+------------+--------------+-------+
+|         1 |           1 | Celular           | 989.00 |         20 | 2026-05-27   |      |
+|         2 |           2 | Cif               |  14.00 |          2 | 2026-05-27   |      |
+|         3 |           3 | Planta Decorativa |  19.00 |          1 | 2026-05-27   |      |
+|         4 |           4 | Macarrão          |   3.00 |          3 | 2026-05-30   |      |
+|         5 |           5 | Pão de Queijo     |  16.00 |          1 | 2026-05-30   |      |
++-----------+-------------+-------------------+--------+------------+--------------+-------+
+5 rows in set (0.001 sec)
+
+MariaDB [produtos]> insert into itens (idcategoria,nomeproduto,preco,quantidade,datacadastro,ativo) values
+    -> (1,'Notebook','1200,00',4,'2026-05-30','1'),
+    -> (1,'Tablet','2,193,90',2,'2026-05-30','1'),
+    -> (2,'Sabão em Pó','22,90',3,'2026-05-30','1'),
+    -> (2,'Água Sanitária','3,99',7,'2026-05-30','1'),
+    -> (3,'Cortina de Janela','495,90',10,'2026-05-30','1'),
+    -> (3,'Luminária','25,90',1,'2026-05-30','1'),
+    -> (4,'Arroz','35,99',3,'2026-05-30','1'),
+    -> (4,'Feijão','10,90',2,'2026-05-30','1'),
+    -> (5,'Pizza','26,00',3,'2026-05-30','1'),
+    -> (5,'Lasanha','30,99',1,'2026-05-30','1');
+Query OK, 10 rows affected, 20 warnings (1.829 sec)
+Records: 10  Duplicates: 0  Warnings: 20
+
+MariaDB [produtos]> select * from itens
+    -> ;
++-----------+-------------+-------------------+---------+------------+--------------+-------+
+| idproduto | idcategoria | nomeproduto       | preco   | quantidade | datacadastro | ativo |
++-----------+-------------+-------------------+---------+------------+--------------+-------+
+|         1 |           1 | Celular           |  989.00 |         20 | 2026-05-27   |      |
+|         2 |           2 | Cif               |   14.00 |          2 | 2026-05-27   |      |
+|         3 |           3 | Planta Decorativa |   19.00 |          1 | 2026-05-27   |      |
+|         4 |           4 | Macarrão          |    3.00 |          3 | 2026-05-30   |      |
+|         5 |           5 | Pão de Queijo     |   16.00 |          1 | 2026-05-30   |      |
+|         6 |           1 | Notebook          | 1200.00 |          4 | 2026-05-30   |      |
+|         7 |           1 | Tablet            |    2.00 |          2 | 2026-05-30   |      |
+|         8 |           2 | Sabão em Pó       |   22.00 |          3 | 2026-05-30   |      |
+|         9 |           2 | Água Sanitária    |    3.00 |          7 | 2026-05-30   |      |
+|        10 |           3 | Cortina de Janela |  495.00 |         10 | 2026-05-30   |      |
+|        11 |           3 | Luminária         |   25.00 |          1 | 2026-05-30   |      |
+|        12 |           4 | Arroz             |   35.00 |          3 | 2026-05-30   |      |
+|        13 |           4 | Feijão            |   10.00 |          2 | 2026-05-30   |      |
+|        14 |           5 | Pizza             |   26.00 |          3 | 2026-05-30   |      |
+|        15 |           5 | Lasanha           |   30.00 |          1 | 2026-05-30   |      |
++-----------+-------------+-------------------+---------+------------+--------------+-------+
+15 rows in set (0.001 sec)
+
+D:\xampp\mysql\bin>
